@@ -12,5 +12,5 @@ Feature: Running applitools framework
 
   @differences
   Scenario: Find the amount of differences
-    Given Compare the differences of the following pdf file "Encuentra-las-diferencias-ficha-color-la-estacion-a4" with Applitools baseline
+    Given Compare the differences of the following pdf file "baseline-modified-01" with Applitools baseline
 

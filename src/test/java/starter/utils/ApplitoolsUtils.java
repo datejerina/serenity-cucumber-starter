@@ -78,7 +78,7 @@ public class ApplitoolsUtils {
         PDDocument doc = PDDocument.load(pdfFilePath);
         PDFRenderer pdfRenderer = new PDFRenderer(doc);
         try {
-            BufferedImage image = pdfRenderer.renderImageWithDPI(1, 600);
+            BufferedImage image = pdfRenderer.renderImageWithDPI(0, 800);
             openEyes(new RectangleSize(image.getWidth(), image.getHeight()));
             eyes.check(pdfFilePath.getName() , com.applitools.eyes.images.Target.image(image));
             image.getGraphics().dispose();
