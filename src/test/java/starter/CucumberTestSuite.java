@@ -15,7 +15,7 @@ import static io.cucumber.junit.platform.engine.Constants.PLUGIN_PROPERTY_NAME;
 @ConfigurationParameter(key = PLUGIN_PROPERTY_NAME, value = "io.cucumber.core.plugin.SerenityReporterParallel,pretty,timeline:build/test-results/timeline")
 @CucumberOptions(
         features = "src/test/resources/features/search",
-        tags = "@differences",
+        tags = "@pdf",
         stepNotifications = true)
 public class CucumberTestSuite {
 }

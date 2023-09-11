@@ -2,7 +2,7 @@
 Feature: Running applitools framework
 
   @pdf
-  Scenario: Connecting to applitools
+  Scenario: Purchasing item and comparing the receipt with Applitools
     Given Nacho navigates to Amazon Website
     And Nacho adds items to the cart
     When Nacho buys the items of the cart

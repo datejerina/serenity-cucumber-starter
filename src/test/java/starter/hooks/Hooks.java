@@ -12,10 +12,7 @@ public class Hooks {
 
     @Before(value = "@applitools")
     public void openEyes(Scenario scenario) {
-
-
         ApplitoolsUtils.setupEyes(scenario);
-//        ApplitoolsUtils.openEyes();
     }
 
 

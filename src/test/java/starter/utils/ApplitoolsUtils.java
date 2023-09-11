@@ -1,9 +1,7 @@
 package starter.utils;
 
-import com.applitools.eyes.RectangleSize;
-import com.applitools.eyes.TestResults;
+import com.applitools.eyes.*;
 import com.applitools.eyes.config.Configuration;
-import com.applitools.eyes.BatchInfo;
 import io.cucumber.java.Scenario;
 import lombok.SneakyThrows;
 import org.apache.pdfbox.pdmodel.PDDocument;
@@ -17,25 +15,29 @@ import java.io.IOException;
 public class ApplitoolsUtils {
 
     public static void setupEyes(Scenario scenario) {
-
         /*
          * Setup a common batch for all tests
          */
-        BatchInfo batchInfo = new BatchInfo("BatchDemo");
+        BatchInfo batchInfo = new BatchInfo("Comparing purchase receipt");
 
         //for the differences pdf
-        batchInfo.setId("04bbb9a2-6ed8-4aef-a76f-a4c6bd90d85b");
+        //batchInfo.setId("04bbb9a2-6ed8-4aef-a76f-a4c6bd90d85b");
 
         //this one is for the PDFs
-       // batchInfo.setId("133f27c5-f33b-44a0-a8c4-dfd1f7139653");
+        batchInfo.setId("23a46df7-14fd-42f5-973a-cd982644ae90");
         Configuration config = new Configuration();
+        config.setBatch(batchInfo);
+
+        //how to connect to applitools: Server and apikey
         config.setApiKey(SerenityUtils.getProperty("applitools.api.key"));
         config.setServerUrl(SerenityUtils.getProperty("applitools.server.url"));
+
+        //AppName, TestName, Browser, ViewporSize, OS
         config.setAppName("Demo");
-        config.setBatch(batchInfo);
         config.setTestName(scenario.getName());
         config.setEnvironmentName("Demo Env");
         config.setHostOS("MacOS");
+
         ApplitoolsGlobalVariables.config = config;
         ApplitoolsGlobalVariables.eyes.setConfiguration(config);
     }
@@ -50,7 +52,8 @@ public class ApplitoolsUtils {
         }
     }
 
-    public static TestResults validatePDFAndGetResults(File pdfFilePath) throws IOException {
+    @SneakyThrows
+    public static TestResults validatePDFAndGetResults(File pdfFilePath) {
         var eyes = ApplitoolsGlobalVariables.eyes;
         if (eyes == null)
             return null;
@@ -71,6 +74,7 @@ public class ApplitoolsUtils {
         return closeEyes();
     }
 
+    @SneakyThrows
     public static TestResults validatePDFDifferencesAndGetResults(File pdfFilePath) throws IOException {
         var eyes = ApplitoolsGlobalVariables.eyes;
         if (eyes == null)
@@ -95,6 +99,16 @@ public class ApplitoolsUtils {
 
     @SneakyThrows
     public static TestResults closeEyes(){
-            return ApplitoolsGlobalVariables.eyes.close();
+        TestResults testResult;
+        try {
+            testResult = ApplitoolsGlobalVariables.eyes.close();
+
+        }catch (EyesException e){
+            System.out.println(e.toString());
+            testResult = new TestResults();
+            testResult.setStatus(TestResultsStatus.Failed);
+
+        }
+            return testResult;
     }
 }

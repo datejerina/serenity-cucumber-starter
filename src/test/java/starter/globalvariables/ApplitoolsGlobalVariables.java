@@ -7,7 +7,7 @@ import com.applitools.eyes.config.Configuration;
 
 
 public class ApplitoolsGlobalVariables {
-    public static EyesRunner runner = new ImageRunner();
+
     public static Eyes eyes = new Eyes();
     public static Configuration config = new Configuration();
 }
